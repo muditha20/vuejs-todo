@@ -1,4 +1,4 @@
-# Custom calculator
+# Todo App
 This is a simple todo app.
 ## Features  ✨
 
