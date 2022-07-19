@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+<title>My Todo</title>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+#myTodo  {
+  background-image: url("img/todo.jpg");
+
+}
+.container {
+    padding: 15px;
+    background-color:rgb(113, 153, 140);
+    width: 480px;
+    height: 480px;
+    margin: 5% auto;
+    box-shadow: 0px 10px 14px -7px #5da1ad;
+    border-radius:8px;
+    
+}
+.container:hover {
+    padding: 15px;
+    background-color: rgb(114, 197, 172);
+    width: 480px;
+    height: 480px;
+    margin: 5% auto;
+    box-shadow: 0px 10px 14px -7px #276873;
+    border-radius:8px;
+
+}
+h1 {
+    padding-top: 10px;
+    letter-spacing: 5px;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center;
+    
+}
+
+.add{
+    box-shadow: 0px 10px 14px -7px #276873;
+    background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+    background-color:#599bb3;
+    border-radius:8px;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:14px;
+    font-weight:bold;
+    padding:8px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #3d768a;
+}
+.add:hover {
+    background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+    background-color:#408c99;
+}
+
+.text{
+    box-shadow: 0px 10px 14px -7px #276873;
+    border-radius:8px;
+    display:inline-block;
+    color:#0d1b1a;
+    font-family:Arial;
+    font-size:14px;
+    font-weight:bold;
+    padding:auto;
+    text-decoration:none;
+    width : 80%;
+    height : 34px;
+    
+}
+
+ol{
+    color:#ffffff;
+    margin: 8px;
+    font-size:20px;
+    font-weight:bold;
+    font-family: Tahoma, sans-serif;
+}
+
+li{
+    margin: 10px;
+}
+.edit, .delete{
+    box-shadow: 0px 10px 14px -7px #276873;
+
+    background-color:#75b2c9;
+    border-radius:8px;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:14px;
+    font-weight:bold;
+    padding:5px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #3d768a;
+}
+
+.todo {
+  z-index: 1; 
+  overflow: auto; 
+  margin: 5px auto;
+}
+
+.todo-content {
+    background-color:rgb(197, 236, 225);
+    border: 1px solid rgb(105, 116, 113);
+    border-radius:8px;
+    width: 80%;
+    margin:auto;
+    padding: 5px;
+    opacity: 0.9;
+
+}
+
+
+</style>
+</head>
+<body>
+
+<div id="myTodo" class="todo">
+  <div class="todo-content">
+
+    <div class="card"><div id="app" class="container">
+        <h1>My Todo list</h1>
+
+        <div v-if="!isEditing">
+            <input type="text" class="add-text text" placeholder="Enter here..." v-model="todo">
+            <input type="submit" value="Add" class="add" @click="storeTodo">
+        </div>
+        <div v-else>
+            <input type="text"  v-model="todo" >
+            <input type="submit" class="edit" value="Update"  @click="updateTodo">
+        </div>
+
+        <ol>
+            <li v-for="(todo, index) in todos">
+                {{ todo }}
+                <button @click="editTodo(index, todo)" class="edit">Edit</button>
+                <button @click="removeTodo(index)" class="delete">Delete</button>
+            </li>
+        </ol>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+
+    <!--Vue script -->
+    <script>
+        new Vue({
+            el: '#app',
+            
+            data: {
+                isEditing: false,
+                todo: '',
+                todos: [],
+                selectedTodo: null
+            },
+            
+            methods: {
+                storeTodo() {
+                    this.todos.push(this.todo)
+                    this.todo = ''
+                },
+
+                removeTodo(index) {
+                    this.todos.splice(index, 1)
+                },
+
+                updateTodo() {
+                    this.todos.splice(this.selectedIndex, 1, this.todo)
+                    this.todo = ''
+                    this.isEditing = false
+                },
+
+                editTodo(index, todo) {
+                    this.isEditing = true
+                    this.todo = todo
+                    this.selectedIndex = index
+                }
+            }
+        })
+    </script>
+    </div>                            
+  </div>
+</div>
+
+</body>
+</html>
